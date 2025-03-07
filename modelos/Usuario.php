@@ -52,4 +52,65 @@
                 return false;
             }
         }
+
+        public function login ($email, $password) {
+            try {
+                $pass = md5($password);
+                $qry = "select * from " . $this->table ." where email = :email and password = :password";
+                $st = $this->conn->prepare($qry);
+                $st->bindParam(":email", $email, PDO::PARAM_STR);
+                $st->bindParam(":password", $pass, PDO::PARAM_STR);
+                $st->execute();
+                $resultado = $st->fetch(PDO::FETCH_ASSOC);
+                if ($resultado) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (PDOException $e) {
+                echo "Excepción capturada : " . $e->getMessage();
+                return false;
+            }
+        }
+        
+        public function consultaEmail ($email) {
+            try {
+                $qry = "select * from " . $this->table . " where email = :email";
+                $st = $this->conn->prepare($qry);
+                $st->bindParam (":email", $email, PDO::PARAM_STR);
+                $st->execute();
+                return $st->fetch(PDO::FETCH_OBJ);
+            } catch (PDOException $e) {
+                echo "Excepción generada : " . $e->getMessage();
+            }
+        }
+
+        public function getUsuario ($id) {
+            try {
+                $qry = "select * from " . $this->table . " where id = :id";
+                $st = $this->conn->prepare($qry);
+                $st->bindParam(":id", $id, PDO::PARAM_INT);
+                $st->execute();
+                return  $st->fetch(PDO::FETCH_OBJ);
+            } catch (PDOException $e) {
+                echo "Excepción generada : " . $e->getMessage();
+                return false;
+            }
+        }
+
+        public function editarUsuario ($id, $nombre, $email, $rol_id){
+            try {
+                $qry = "update ". $this->table . " set nombre=:nombre, email=:email,rol_id = :rol_id where id = :id";
+                $st = $this->conn->prepare($qry);
+                $st->bindParam(":id", $id, PDO::PARAM_INT);
+                $st->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+                $st->bindParam(":email", $email, PDO::PARAM_STR);
+                $st->bindParam(":rol_id", $rol_id, PDO::PARAM_INT);
+                $st->execute();
+                return true;
+            } catch (PDOException $e) {
+                echo "Excepción generada : " . $e->getMessage();
+                return false;
+            }
+        }
     }
