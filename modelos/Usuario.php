@@ -113,4 +113,17 @@
                 return false;
             }
         }
+
+        public function borrar ($id) {
+            $qry = "delete from " . $this->table . " where id = :id";
+            try {
+                $st = $this->conn->prepare($qry);
+                $st->bindParam (":id", $id, PDO::PARAM_STR);
+                $st->execute();
+                return true;
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+            }
+        }
     }

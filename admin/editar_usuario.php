@@ -26,6 +26,16 @@
             }
         }
     }
+
+    if (isset($_POST["borrarUsuario"])){
+        $id = $_POST["id"];
+        if ($user->borrar($id)){
+            $mensaje = "Usuario eliminado con éxito";
+            header ('location: usuarios.php?mensaje='.urlencode($mensaje));
+        } else {
+            $error = "No se pudo eliminar el usuario!!";
+        }
+    }
 ?>
 
 <div class="row">
