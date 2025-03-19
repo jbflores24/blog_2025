@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed">
         <div class="container">
             <a class="navbar-brand" href="index.php">Blog</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,7 +7,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"> 
                     
-                <?php if ($_SESSION['auth']):?>  
+                    <?php if ($_SESSION['auth']):?>  
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Administración
@@ -48,7 +48,7 @@
                    
 
                        
-                        <?php if ($_SESSION['auth']):?>
+                        <?php if ($_SESSION["auth"]):?>
                           <li class="nav-item">
                               <p class="text-white mt-2"><i class="bi bi-person-circle"></i> <?=$_SESSION['nombre']?> </p>
                           </li>

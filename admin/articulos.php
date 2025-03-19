@@ -2,6 +2,7 @@
     include("../includes/header.php"); 
     include "../config/Mysql.php";
     include "../modelos/Articulo.php";
+    include "../helpers/helpers_formato.php";
     $base = new Mysql();
     $cx = $base->connect();
     $articulos = new Articulo($cx);
@@ -54,15 +55,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($articulos->listar() as $articulo):?>
+                    <?php foreach ($articulos->listar($_SESSION["id"], $_SESSION["rol_id"]) as $articulo):?>
                     <tr>
                         <td><?=$articulo->id?></td>
                         <td><?=$articulo->titulo?></td>
                         <td>
                             <img src="../img/articulos/<?=$articulo->imagen?>" style="width:180px;" alt="../img/articulos/<?=$articulo->imagen?>">
                         </td>
-                        <td><?=$articulo->texto?></td>
-                        <td><?=$articulo->fecha_creacion?></td>                      
+                        <td><?=textoCorto($articulo->texto,400)?></td>
+                        <td><?=formatearFecha($articulo->fecha_creacion)?></td>                      
                         <td>
                         <a href="gestionArticulo.php?op=2&id=<?=$articulo->id?>" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a>                       
                         </td>

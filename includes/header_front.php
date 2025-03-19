@@ -1,6 +1,9 @@
 <?php
   include "./config/config.php";
   session_start();
+  if (!isset($_SESSION['auth'])){
+    $_SESSION['auth']=false;
+  }
 ?>
 <!doctype html>
 <html lang="es">

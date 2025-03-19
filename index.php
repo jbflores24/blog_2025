@@ -1,47 +1,31 @@
-<?php include("includes/header_front.php") ?>
-    <?php include "./includes/slider.php";?>
-    <div class="container mt-5">
+<?php
+    include("includes/header_front.php");
+    include "./includes/slider.php";
+    include "./config/Mysql.php";
+    include "./modelos/Articulo.php";
+    include "./helpers/helpers_formato.php";
+    $base = new Mysql();
+    $cx = $base->connect();
+    $articulos = new Articulo($cx);
+?>
+<div class="container mt-5">
     <div class="container-fluid">
         <h1 class="text-center">Artículos</h1>
         <div class="row">
-       
+            <?php foreach ($articulos->listar(0,1) as $articulo):?>
             <div class="col-sm-4">
                 <div class="card">
-                    <img src="img/articulos/img1.jpg" class="card-img-top">
+                    <img src="img/articulos/<?=$articulo->imagen?>" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Título demo</h5>
-                        <p><strong>2020-12-25</strong></p>
-                        <p class="card-text">Texto demo</p>
+                        <h5 class="card-title"><?=$articulo->titulo?></h5>
+                        <p><strong><?=formatearFecha($articulo->fecha_creacion)?></strong></p>
+                        <p class="card-text"><?=textoCorto($articulo->texto,400)?></p>
                         <a href="detalle.php" class="btn btn-primary">Ver más</a>
                     </div>
                 </div>
             </div>
+            <?php endforeach;?>
 
-            <div class="col-sm-4">
-                <div class="card">
-                    <img src="img/articulos/img3.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Título demo</h5>
-                        <p><strong>2020-12-25</strong></p>
-                        <p class="card-text">Texto demo</p>
-                        <a href="detalle.php" class="btn btn-primary">Ver más</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="card">
-                    <img src="img/articulos/img5.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Título demo</h5>
-                        <p><strong>2020-12-25</strong></p>
-                        <p class="card-text">Texto demo</p>
-                        <a href="detalle.php" class="btn btn-primary">Ver más</a>
-                    </div>
-                </div>
-            </div>
-      
-        </div>            
+        </div>
     </div>
-<?php include("includes/footer.php") ?>
-       
+    <?php include("includes/footer.php") ?>
